@@ -85,6 +85,23 @@ class Vocabulary(Protocol):
     #   codes_for_term(term) -> every code that name belongs to
     #   is_kind(code)        -> True if the code is the right KIND of thing
 
+    # WHICH NAMES `terms()` RETURNS IS THE MOST CONSEQUENTIAL DECISION HERE, and
+    # it is usually made once, early, without measurement.
+    #
+    # Measured on the same 4,259 records, the same check, changing only the name
+    # list the vocabulary was built with:
+    #
+    #     scientific names only          5.4% identical, 76.8% no overlap
+    #     plus common names + synonyms  35.4% identical, 43.4% no overlap
+    #
+    # A 6.5x move in the stratum the lexical relation can endorse, because the
+    # vocabulary was permitted to know that "mouse" names Mus musculus. The
+    # canonical name was IDENTICAL in both builds — only the alternates differed.
+    #
+    # So a yield reported without naming the vocabulary configuration is not
+    # comparable with anything, including itself. `report(vocabulary=...)` takes
+    # that string for exactly this reason.
+
 
 @dataclass
 class Relation:
@@ -226,9 +243,15 @@ def _unique(value, before, after, code, vocab) -> str:
     per-record contradiction made it reject 126 correct records before that was
     noticed.
     """
+    # EVERY term, not terms()[0]. The same mistake in the study made two
+    # vocabularies that differ by 523,000 names return byte-identical numbers,
+    # which is impossible and was visible only because both arms ran side by
+    # side. A comparison whose arms agree exactly is a comparison that is not
+    # running.
     try:
-        name = (vocab.terms(code) or [None])[0]
-        holders = set(vocab.codes_for_term(name) or []) if name else set()
+        holders: set = set()
+        for name in (vocab.terms(code) or []):
+            holders |= set(vocab.codes_for_term(name) or [])
     except Exception:
         return SILENT
     return AGREE if holders else SILENT
@@ -355,7 +378,8 @@ def measure(records, vocab, *, value_of=None, code_of=None, context_of=None,
     return out
 
 
-def report(results, on: str = "known-good records", corpus: str = "") -> str:
+def report(results, on: str = "known-good records", corpus: str = "",
+           vocabulary: str = "") -> str:
     """The recommendation, not the diagnosis.
 
     Usable relations first. A report that opens with what is broken tells
@@ -369,7 +393,14 @@ def report(results, on: str = "known-good records", corpus: str = "") -> str:
         return "  no relations were measured"
     w = max(len(r.name) for r in rows)
     lines = [f"  relations available on this data  ·  measured on {on.upper()}, "
-             f"no model calls", ""]
+             f"no model calls"]
+    # The vocabulary configuration belongs in the header, not a footnote. It
+    # moved the endorsable stratum 5.4% -> 35.4% on one measured corpus, which
+    # is a larger effect than most of what these relations detect.
+    lines.append(f"  vocabulary: {vocabulary}" if vocabulary else
+                 "  vocabulary: NOT STATED — which names it returns moved this "
+                 "measurement 6.5x once")
+    lines.append("")
     for r in rows:
         v = r.verdict()
         if v == "n/a":

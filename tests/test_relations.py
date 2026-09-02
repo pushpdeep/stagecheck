@@ -112,3 +112,28 @@ def test_a_registered_relation_is_measured():
 def test_registering_a_duplicate_name_is_refused():
     with pytest.raises(ValueError, match="already registered"):
         R.register(R.Relation("lexical", "x", lambda *a: R.SILENT))
+
+
+def test_unique_reads_every_term_not_just_the_first():
+    """The study's bug: comparing against terms()[0] made two vocabularies
+    differing by 523,000 names return identical numbers."""
+    seen = []
+
+    class V:
+        def exists(self, c): return True
+        def terms(self, c): return ["Mus musculus", "mouse", "house mouse"]
+        def codes_for_term(self, t):
+            seen.append(t)
+            return ["10090"] if t == "mouse" else []
+
+    R.measure([Rec("mice", "10090")], V())
+    assert "mouse" in seen, "it stopped at the first term"
+    assert len(seen) == 3
+
+
+def test_report_states_the_vocabulary_or_says_it_did_not():
+    recs = [Rec("drowsy", "271782001")]
+    res = R.measure(recs, Vocab())
+    assert "NOT STATED" in R.report(res)
+    out = R.report(res, vocabulary="scientific names only, 2.99M taxa")
+    assert "scientific names only" in out and "NOT STATED" not in out
