@@ -9,6 +9,10 @@ description = "Every stage makes a bet. This one makes you say what it is."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
+authors = [
+  { name = "Pushpdeep Singh" },
+  { name = "Wejdan Bagais", email = "wejdan.bagais@usp.org" },
+]
 keywords = ["llm", "pipeline", "evaluation", "observability", "reliability"]
 classifiers = [
   "Development Status :: 3 - Alpha",
