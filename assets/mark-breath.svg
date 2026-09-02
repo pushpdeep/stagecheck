@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+<defs><pattern id="h" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="7" stroke="#9A958C" stroke-width="3"/></pattern></defs>
+<rect x="0" y="0" width="15.36" height="96" rx="2.77" fill="#1A2332"/>
+<rect x="24.96" y="15.36" width="74.88" height="15.36" rx="2.77" fill="#2F6B4F"></rect>
+<rect x="24.96" y="40.32" width="46.08" height="15.36" rx="2.77" fill="#A4322B"></rect>
+<rect x="24.96" y="65.28" width="59.52" height="15.36" rx="2.77" fill="url(#h)"><animate attributeName="opacity" values="1;.28;1" dur="3.6s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1"/></rect>
+</svg>

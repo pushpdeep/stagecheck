@@ -22,6 +22,10 @@ classifiers = [
 # shape — the failure mode that ages most tooling in this space.
 dependencies = []
 
+[project.urls]
+Homepage = "https://gitlab.com/pushpdeep/stagecheck"
+Source = "https://gitlab.com/pushpdeep/stagecheck"
+
 [project.optional-dependencies]
 dev = ["pytest>=7"]
 
@@ -30,3 +34,9 @@ stagecheck = "stagecheck.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/stagecheck"]
+
+[tool.hatch.build.targets.sdist]
+# The mark ships with the source. generate.py is included deliberately: the
+# assets are generated from one geometry, and a set that cannot be regenerated
+# drifts the first time somebody is in a hurry.
+include = ["src/", "tests/", "assets/", "README.md", "LICENSE", "pyproject.toml"]

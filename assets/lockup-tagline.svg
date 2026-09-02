@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 56" width="330" height="56"><defs><pattern id="h" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="7" stroke="#9A958C" stroke-width="3"/></pattern></defs><g transform="translate(0,0)"><rect x="0" y="0" width="8.32" height="52.00" rx="1.50" fill="#1A2332"/>
+<rect x="13.52" y="8.32" width="40.56" height="8.32" rx="1.50" fill="#2F6B4F"/>
+<rect x="13.52" y="21.84" width="24.96" height="8.32" rx="1.50" fill="#A4322B"/>
+<rect x="13.52" y="35.36" width="32.24" height="8.32" rx="1.50" fill="url(#h)"/></g><text x="70" y="30" font-family="SF Mono,Menlo,monospace" font-size="27" font-weight="600" letter-spacing="-.02em" fill="#1A2332">stagecheck</text><text x="70" y="50" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6E6A63">Every stage makes a bet.</text></svg>

@@ -1,6 +1,19 @@
-# stagecheck
+<p align="center">
+  <img src="assets/mark-loop.svg" width="104" alt="A ledger spine with three rows: judged, failed, and a hatched row for records that could not be judged.">
+</p>
 
-**Every stage makes a bet. This one makes you say what it is.**
+<h1 align="center">stagecheck</h1>
+
+<p align="center"><i>Every stage makes a bet. This one makes you say what it is.</i></p>
+
+<p align="center">
+  <a href="#the-two-fields">the two fields</a> ·
+  <a href="#why-it-is-not-ragas">why it is not ragas</a> ·
+  <a href="#where-it-came-from">where it came from</a> ·
+  <a href="assets/README.md">the mark</a>
+</p>
+
+---
 
 A pipeline with several stages — validate, retry, vote, judge, abstain — and no
 way to tell which of them earns its cost. stagecheck records the two things
@@ -33,7 +46,7 @@ print(stagecheck.report())
     something to correct
 ```
 
-## The two fields
+<h2 id="the-two-fields">The two fields</h2>
 
 **A denominator on every row.** The named set a rate is over. In the study this
 came from, a judge's agreement figure moved **100% → 98% → 49%** across three
@@ -57,7 +70,7 @@ with a different unit, and it has no other tool.
 It never calls a model. No API keys, no dependencies, nothing leaves your
 machine.
 
-## Where it came from
+<h2 id="where-it-came-from">Where it came from</h2>
 
 A five-month study measuring seven reliability layers over three corpora
 (clinical forum posts, SEC filings, news geography) and five model families.
@@ -143,5 +156,20 @@ dashboard.write([validator, corrector, judge], preflights, "run.html")
 Three columns — predicted, observed, divergence — and the third is the only one
 worth reading. A bet that held beside a stage that judged nothing is a different
 problem from a bet that never held, and neither number alone says so.
+
+## The mark
+
+<img src="assets/mark.svg" width="56" align="left" hspace="16" vspace="4" alt="">
+
+A ledger with three states where everything else has two: a bound spine, a row
+judged, a row failed, and a hatched row for what could not be judged. That third
+row is the product, and it is deliberately the only one without a colour — an
+absence of measurement should not render as a measurement.
+
+Deliberately not an AI logo. Looking like the category you are arguing with is a
+positioning mistake. Rationale, palette, motion and the geometry that generates
+every file: [`assets/README.md`](assets/README.md).
+
+<br clear="left"/>
 
 MIT.
