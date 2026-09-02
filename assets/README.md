@@ -58,6 +58,28 @@ rule the tool applies to itself: the row still says *counted, not judged*, and
 losing the texture does not lose the meaning. `generate.py` takes `flat=True`
 for exactly this.
 
+## Light and dark
+
+Every file carries a `prefers-color-scheme` media query, so one asset adapts
+rather than needing two kept in step.
+
+The first version did not, and the failure was one-sided in an instructive way:
+the **mark** survived on a dark README because its rows carry their own colour,
+and the **wordmark disappeared entirely** — ink `#1A2332` on `#0D1117`. A mark
+whose meaning is carried by colour degrades gracefully; type does not.
+
+The colours do not simply invert. On dark the greens and reds **lift** —
+`#2F6B4F` is legible on paper and muddy on ink — and the hatch moves to a grey
+that reads against a dark ground instead of vanishing into it.
+
+**The limitation, stated:** `prefers-color-scheme` follows the reader's
+browser or OS setting, not the surrounding background. GitHub and GitLab both
+follow that same preference by default, so this lands correctly for nearly
+everyone; someone forcing a dark site theme against a light OS would still see
+dark on dark. The alternative — a `<picture>` element with two files — is
+supported on GitHub, inconsistent on GitLab, and means two assets to keep in
+step. One adaptive file was the better trade.
+
 ## Palette
 
 | | | |
@@ -68,8 +90,10 @@ for exactly this.
 | cannot judge | `#9A958C` | grey, never a colour |
 | paper | `#FBFAF7` | warm near-white, not cream |
 
-On dark backgrounds the greens and reds lift to `#5FBF88` and `#E27A72`, and the
-hatch inverts to white.
+On dark: ink becomes `#E6E9ED`, judged `#5FBF88`, failed `#E27A72`, and the
+hatch `#7E8895`.
+
+
 
 ## Motion
 
@@ -101,7 +125,6 @@ loading state and belongs nowhere near an identity.
 | file | use |
 |---|---|
 | `mark.svg` | the mark, light background |
-| `mark-dark.svg` | reversed, for dark |
 | `mark-loop.svg` | **README header, hero** — counts, holds, clears |
 | `mark-once.svg` | docs, slides — plays once |
 | `mark-breath.svg` | permanent placements — opacity only |
@@ -111,7 +134,6 @@ loading state and belongs nowhere near an identity.
 | `lockup-loop.svg` | mark + wordmark, looping — landing pages |
 | `lockup-tagline.svg` | mark + wordmark + tagline |
 | `lockup-loop-tagline.svg` | the same, looping |
-| `lockup-dark.svg` | reversed, for a dark theme |
 | `lockup-large.svg` | 72px hero |
 | `favicon-16/32/64.svg` | 16 is flat-grey by design |
 | `generate.py` | **produces every file above from one geometry** |

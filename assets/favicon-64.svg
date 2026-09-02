@@ -1,4 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"><defs><pattern id="h" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="7" stroke="#9A958C" stroke-width="2"/></pattern></defs><rect x="0" y="0" width="10.24" height="64.00" rx="1.84" fill="#1A2332"/>
-<rect x="16.64" y="10.24" width="49.92" height="10.24" rx="1.84" fill="#2F6B4F"/>
-<rect x="16.64" y="26.88" width="30.72" height="10.24" rx="1.84" fill="#A4322B"/>
-<rect x="16.64" y="43.52" width="39.68" height="10.24" rx="1.84" fill="url(#h)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs><pattern id="h" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line class="hl" x1="0" y1="0" x2="0" y2="7" stroke-width="3"/></pattern></defs>
+  <style>
+    .ink{fill:#1A2332}
+    .judged{fill:#2F6B4F}
+    .failed{fill:#A4322B}
+    .hl{stroke:#9A958C}
+    .quiet{fill:#6E6A63}
+    @media (prefers-color-scheme: dark){
+      .ink{fill:#E6E9ED}
+      .judged{fill:#5FBF88}
+      .failed{fill:#E27A72}
+      .hl{stroke:#7E8895}
+      .quiet{fill:#9AA3AF}
+    }
+  </style>
+  <rect class="ink" x="0" y="0" width="10.24" height="64" rx="1.84"/>
+  <rect class="judged" x="16.64" y="10.24" width="49.92" height="10.24" rx="1.84"></rect>
+  <rect class="failed" x="16.64" y="26.88" width="30.72" height="10.24" rx="1.84"></rect>
+  <rect x="16.64" y="43.52" width="39.68" height="10.24" rx="1.84" fill="url(#h)"></rect>
+</svg>

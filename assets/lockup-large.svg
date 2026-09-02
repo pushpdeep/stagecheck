@@ -1,4 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 72" width="410" height="72"><defs><pattern id="h" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="7" stroke="#9A958C" stroke-width="3"/></pattern></defs><rect x="0" y="0" width="11.52" height="72" rx="2.07" fill="#1A2332"/>
-<rect x="18.72" y="11.52" width="0.00" height="11.52" rx="2.07" fill="#2F6B4F"><animate attributeName="width" values="0;0.0;9.4;18.7;28.1;37.4;46.8;56.2;56.2;0;0" keyTimes="0;.03;.06;.09;.12;.15;.18;.2;.78;.85;1" dur="6s" begin="0.0s" repeatCount="indefinite" calcMode="discrete"/></rect>
-<rect x="18.72" y="30.24" width="0.00" height="11.52" rx="2.07" fill="#A4322B"><animate attributeName="width" values="0;0.0;5.8;11.5;17.3;23.0;28.8;34.6;34.6;0;0" keyTimes="0;.03;.06;.09;.12;.15;.18;.2;.78;.85;1" dur="6s" begin="0.1s" repeatCount="indefinite" calcMode="discrete"/></rect>
-<rect x="18.72" y="48.96" width="0.00" height="11.52" rx="2.07" fill="url(#h)"><animate attributeName="width" values="0;0.0;7.4;14.9;22.3;29.8;37.2;44.6;44.6;0;0" keyTimes="0;.03;.06;.09;.12;.15;.18;.2;.78;.85;1" dur="6s" begin="0.2s" repeatCount="indefinite" calcMode="discrete"/></rect><text x="112" y="52" font-family="SF Mono,Menlo,Consolas,monospace" font-size="48" font-weight="600" letter-spacing="-.02em" fill="#1A2332">stagecheck</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 72" width="410" height="72">
+  <defs><pattern id="h" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line class="hl" x1="0" y1="0" x2="0" y2="7" stroke-width="3"/></pattern></defs>
+  <style>
+    .ink{fill:#1A2332}
+    .judged{fill:#2F6B4F}
+    .failed{fill:#A4322B}
+    .hl{stroke:#9A958C}
+    .quiet{fill:#6E6A63}
+    @media (prefers-color-scheme: dark){
+      .ink{fill:#E6E9ED}
+      .judged{fill:#5FBF88}
+      .failed{fill:#E27A72}
+      .hl{stroke:#7E8895}
+      .quiet{fill:#9AA3AF}
+    }
+  </style>
+  <rect class="ink" x="0" y="0" width="11.52" height="72" rx="2.07"/>
+  <rect class="judged" x="18.72" y="11.52" width="0.00" height="11.52" rx="2.07"><animate attributeName="width" values="0;0.0;9.4;18.7;28.1;37.4;46.8;56.2;56.2;0;0" keyTimes="0;.03;.06;.09;.12;.15;.18;.2;.78;.85;1" dur="6s" begin="0.0s" repeatCount="indefinite" calcMode="discrete"/></rect>
+  <rect class="failed" x="18.72" y="30.24" width="0.00" height="11.52" rx="2.07"><animate attributeName="width" values="0;0.0;5.8;11.5;17.3;23.0;28.8;34.6;34.6;0;0" keyTimes="0;.03;.06;.09;.12;.15;.18;.2;.78;.85;1" dur="6s" begin="0.1s" repeatCount="indefinite" calcMode="discrete"/></rect>
+  <rect x="18.72" y="48.96" width="0.00" height="11.52" rx="2.07" fill="url(#h)"><animate attributeName="width" values="0;0.0;7.4;14.9;22.3;29.8;37.2;44.6;44.6;0;0" keyTimes="0;.03;.06;.09;.12;.15;.18;.2;.78;.85;1" dur="6s" begin="0.2s" repeatCount="indefinite" calcMode="discrete"/></rect>
+  <text class="ink" x="112" y="52" font-family="SF Mono,Menlo,Consolas,monospace" font-size="48" font-weight="600" letter-spacing="-.02em">stagecheck</text>
+</svg>
