@@ -82,7 +82,10 @@ before clearing. The long hold is what makes a loop bearable — for most of the
 cycle it is simply the logo.
 
 **`mark-once.svg`** plays that once and stops. Use it anywhere the reader is
-meant to read past it.
+meant to read past it — which is why the README header uses `lockup-once.svg`
+rather than the looping variant. A mark that keeps moving above text somebody is
+about to read is an irritant, and **a lockup that only works when it moves is not
+a lockup**: the static file is the fallback and it must stand alone.
 
 **`mark-breath.svg`** is the quietest loop: nothing changes shape, only the
 unjudged row's opacity. A loop that changes shape draws the eye every cycle; one
@@ -103,8 +106,13 @@ loading state and belongs nowhere near an identity.
 | `mark-once.svg` | docs, slides — plays once |
 | `mark-breath.svg` | permanent placements — opacity only |
 | `tile.svg` | avatar, social, app icon |
-| `lockup.svg` | mark + wordmark, horizontal |
+| `lockup-once.svg` | **README header** — counts on load, then stops |
+| `lockup.svg` | mark + wordmark, static — the fallback |
+| `lockup-loop.svg` | mark + wordmark, looping — landing pages |
 | `lockup-tagline.svg` | mark + wordmark + tagline |
+| `lockup-loop-tagline.svg` | the same, looping |
+| `lockup-dark.svg` | reversed, for a dark theme |
+| `lockup-large.svg` | 72px hero |
 | `favicon-16/32/64.svg` | 16 is flat-grey by design |
 | `generate.py` | **produces every file above from one geometry** |
 

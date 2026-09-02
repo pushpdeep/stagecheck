@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 252 44" width="252" height="44"><defs><pattern id="h" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="7" stroke="#FFFFFF" stroke-width="2.6"/></pattern></defs><rect x="0" y="0" width="7.04" height="44" rx="1.27" fill="#FFFFFF"/>
+<rect x="11.44" y="7.04" width="34.32" height="7.04" rx="1.27" fill="#5FBF88"></rect>
+<rect x="11.44" y="18.48" width="21.12" height="7.04" rx="1.27" fill="#E27A72"></rect>
+<rect x="11.44" y="29.92" width="27.28" height="7.04" rx="1.27" fill="url(#h)"></rect><text x="68" y="32" font-family="SF Mono,Menlo,Consolas,monospace" font-size="29" font-weight="600" letter-spacing="-.02em" fill="#FFFFFF">stagecheck</text></svg>

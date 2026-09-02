@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="assets/mark-loop.svg" width="104" alt="A ledger spine with three rows: judged, failed, and a hatched row for records that could not be judged.">
+  <img src="assets/lockup-once.svg" width="300" alt="stagecheck — a ledger spine with three rows: judged, failed, and a hatched row for records that could not be judged.">
 </p>
-
-<h1 align="center">stagecheck</h1>
 
 <p align="center"><i>Every stage makes a bet. This one makes you say what it is.</i></p>
 
