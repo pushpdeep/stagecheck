@@ -89,13 +89,49 @@ nothing** — statements about whether the stage ran, never about whether its
 answers were good. Halting a run because a result looks unwelcome is optional
 stopping, and a tool that encourages it is worse than none.
 
-## Not built yet
+## One declaration, three tenses
 
-`preflight` (does this stage's bet hold, before you build it) and `watch`
-(halt on a broken setup, mid-run) are designed and not implemented. They are
-absent rather than stubbed: a stage that runs and does nothing is the defect
-this tool exists to find.
+Declare a stage once, and the same object answers all three questions.
+
+```python
+validator = stagecheck.declare(
+    "validator",
+    bet="the output has a decidable invalid state",
+    denominator="records_offered",
+    precondition=stagecheck.Precondition(
+        measures="share of gold whose code fails the free check",
+        over="coded gold mentions",
+        measure=lambda recs: (sum(1 for r in recs if bad(r)), len(recs)),
+        holds_if=lambda rate: rate > 0.05,
+    ),
+    invariants=[
+        stagecheck.Invariant(
+            "menu size",
+            lambda menu, configured, **_: menu == configured,
+            "the menu is smaller than the manifest asked for"),
+    ],
+)
+
+before = validator.preflight(dev_gold)      # does the bet hold?
+with validator.run(menu=139, configured=139) as s:
+    ...                                     # is the setup still what I declared?
+print(validator.report(before))             # did the bet pay?
+```
+
+`watch` halts on the **setup**, never on a result. Halting because a number
+looks unwelcome is optional stopping; halting because the resolved model is not
+the requested one is a bug report. Every halt is recorded, and a halted run
+produces no number.
+
+## The dashboard
+
+```python
+from stagecheck import dashboard
+dashboard.write([validator, corrector, judge], preflights, "run.html")
+```
+
+Three columns — predicted, observed, divergence — and the third is the only one
+worth reading. A bet that held beside a stage that judged nothing is a different
+problem from a bet that never held, and neither number alone says so.
 
 MIT.
-
-By [@pushpdeep](https://gitlab.com/pushpdeep) and [@wbagais](https://gitlab.com/wbagais).

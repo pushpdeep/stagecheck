@@ -42,7 +42,7 @@ import time
 from dataclasses import asdict, dataclass, field
 from contextlib import contextmanager
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 PASS, FAIL, COULD_NOT_RUN = "pass", "fail", "could_not_run"
 EVALUABLE = (PASS, FAIL, COULD_NOT_RUN)
@@ -283,3 +283,18 @@ def _id(rec) -> str:
             if rec.get(k):
                 return str(rec[k])
     return str(id(rec))
+
+
+# ── one declaration, three tenses ───────────────────────────────────────
+# Imported last: declare.py needs Ledger, Summary and the outcome constants
+# from this module, so the import cannot sit at the top.
+from .declare import (  # noqa: E402
+    Invariant, Measurement, Precondition, SetupBroken, Stage as DeclaredStage,
+    declare,
+)
+
+__all__ = [
+    "stage", "declare", "report", "write", "reset", "rows", "summaries",
+    "Ledger", "Row", "Summary", "Precondition", "Invariant", "Measurement",
+    "SetupBroken", "PASS", "FAIL", "COULD_NOT_RUN",
+]
