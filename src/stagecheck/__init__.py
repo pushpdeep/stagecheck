@@ -42,7 +42,7 @@ import time
 from dataclasses import asdict, dataclass, field
 from contextlib import contextmanager
 
-__version__ = "0.2.0"
+__version__ = "0.1.0"
 
 PASS, FAIL, COULD_NOT_RUN = "pass", "fail", "could_not_run"
 EVALUABLE = (PASS, FAIL, COULD_NOT_RUN)

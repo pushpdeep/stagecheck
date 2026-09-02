@@ -57,6 +57,34 @@ with a different unit, and it has no other tool.
 It never calls a model. No API keys, no dependencies, nothing leaves your
 machine.
 
+## The evidence, and how it stays current
+
+Every check ships with its track record — what it predicted, on which corpus,
+and what happened. `src/stagecheck/evidence.json` is exported from the study
+that produced these checks and **vendored, not fetched**: a tool that phones
+home for its calibration behaves differently depending on the network.
+
+```
+5 prediction(s) from CADEC v2, FiNER-139, GeoWebNews, study dce381b, 0 days old
+
+  lexical    3 on record · 2 right, 1 partly  ·  MISSED on GeoWebNews
+  type       1 on record · 1 wrong  ·  MISSED on FiNER-139
+  unique     1 on record · 1 unknown
+  semantic   no track record — this check has never been tested against an outcome
+```
+
+**The dependency points one way.** The study imports stagecheck; stagecheck
+knows nothing about the study. Only evidence flows back, and evidence is data.
+The study re-exports with `scripts/export_evidence.py` whenever its findings
+change.
+
+**And the record has an age**, because this tool decays unusually. It has no
+dependencies to break — it reads a file and does arithmetic and never calls a
+model. It decays because its *knowledge* ages: "self-correction rescues nothing"
+was measured on 2026 models, and if a later generation corrects itself reliably
+the code still runs and the advice is wrong. A record older than a model
+generation **fails a test**, rather than printing a warning nobody acts on.
+
 ## Where it came from
 
 A five-month study measuring seven reliability layers over three corpora
