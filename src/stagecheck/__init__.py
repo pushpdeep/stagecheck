@@ -288,6 +288,7 @@ def _id(rec) -> str:
 # ── one declaration, three tenses ───────────────────────────────────────
 # Imported last: declare.py needs Ledger, Summary and the outcome constants
 # from this module, so the import cannot sit at the top.
+from . import relations  # noqa: E402,F401
 from .declare import (  # noqa: E402
     Invariant, Measurement, Precondition, SetupBroken, Stage as DeclaredStage,
     declare,
@@ -296,5 +297,5 @@ from .declare import (  # noqa: E402
 __all__ = [
     "stage", "declare", "report", "write", "reset", "rows", "summaries",
     "Ledger", "Row", "Summary", "Precondition", "Invariant", "Measurement",
-    "SetupBroken", "PASS", "FAIL", "COULD_NOT_RUN",
+    "SetupBroken", "PASS", "FAIL", "COULD_NOT_RUN", "relations", "evidence",
 ]

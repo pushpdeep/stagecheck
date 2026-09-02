@@ -57,34 +57,6 @@ with a different unit, and it has no other tool.
 It never calls a model. No API keys, no dependencies, nothing leaves your
 machine.
 
-## The evidence, and how it stays current
-
-Every check ships with its track record — what it predicted, on which corpus,
-and what happened. `src/stagecheck/evidence.json` is exported from the study
-that produced these checks and **vendored, not fetched**: a tool that phones
-home for its calibration behaves differently depending on the network.
-
-```
-5 prediction(s) from CADEC v2, FiNER-139, GeoWebNews, study dce381b, 0 days old
-
-  lexical    3 on record · 2 right, 1 partly  ·  MISSED on GeoWebNews
-  type       1 on record · 1 wrong  ·  MISSED on FiNER-139
-  unique     1 on record · 1 unknown
-  semantic   no track record — this check has never been tested against an outcome
-```
-
-**The dependency points one way.** The study imports stagecheck; stagecheck
-knows nothing about the study. Only evidence flows back, and evidence is data.
-The study re-exports with `scripts/export_evidence.py` whenever its findings
-change.
-
-**And the record has an age**, because this tool decays unusually. It has no
-dependencies to break — it reads a file and does arithmetic and never calls a
-model. It decays because its *knowledge* ages: "self-correction rescues nothing"
-was measured on 2026 models, and if a later generation corrects itself reliably
-the code still runs and the advice is wrong. A record older than a model
-generation **fails a test**, rather than printing a warning nobody acts on.
-
 ## Where it came from
 
 A five-month study measuring seven reliability layers over three corpora
@@ -107,10 +79,20 @@ pip install stagecheck
 ## CLI
 
 ```
-stagecheck report ledger.jsonl    what each stage was offered, judged, changed
-stagecheck check  ledger.jsonl    exit non-zero if a stage is silent or inert
+stagecheck preflight mod:STAGES   does each stage's bet hold, before you build it?
+stagecheck report    ledger.jsonl what each stage was offered, judged, changed
+stagecheck check     ledger.jsonl exit non-zero if a stage is silent or inert
+stagecheck evidence               what these checks predicted, and what happened
 stagecheck why                    what this records, and what it caught
 ```
+
+`preflight` imports the module you name — your declarations live next to your
+stages, not in a config file — the same bargain `gunicorn app:app` makes.
+
+**There is no `watch` subcommand.** `watch()` asserts a stage's invariants
+against live context, inside the process, while the run happens; a command line
+cannot attach to that. One that printed something plausible and checked nothing
+would be the exact defect this package exists to find, so it is library-only.
 
 `check` fails a build only when a stage **judged nothing** or **changed
 nothing** — statements about whether the stage ran, never about whether its

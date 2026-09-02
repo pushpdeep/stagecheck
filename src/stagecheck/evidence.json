@@ -1,10 +1,10 @@
 {
-  "_what": "The track record of the checks in stagecheck's relation registry, exported from the study that produced them. Data, not code \u2014 the tool does not depend on the study.",
-  "_read_the_dates": "Every finding here was measured on the models and corpora named. The machinery that produced them is durable; these conclusions are not. A verdict older than a model generation should be read as a hypothesis, and stagecheck prints the age for that reason.",
+  "_what": "The track record of the checks in stagecheck's relation registry, exported from the study that produced them. Data, not code.",
+  "_read_the_dates": "Every finding here was measured on the models and corpora named. The machinery is durable; these conclusions are not.",
   "exported": "2026-09-02",
   "study": {
-    "repo": "https://gitlab.com/pushpdeep/ai-reliability-ladder.git",
-    "sha": "245a03d",
+    "repo": "https://gitlab.com/pushpdeep/ai-reliability-ladder",
+    "sha": "dce381b",
     "dirty": false,
     "_dirty_note": ""
   },
@@ -28,87 +28,73 @@
   "predictions": [
     {
       "check": "accept_lane_fires",
+      "said": "BUILD \u2014 the lane can fire",
       "scope": {
         "corpus": "CADEC",
         "split": "dev",
         "on": "gold",
         "n": 276
       },
-      "said": "BUILD \u2014 the lane can fire",
       "when": "2026-09-01",
       "outcome": "right",
-      "what_happened": "42.4% on gold; the lane measured 80-89% correct across five model families spanning 2.8x in headline F1.",
+      "what_happened": "42.4% on gold; the lane measured 80-89% correct across five model families.",
       "note": ""
     },
     {
       "check": "accept_lane_fires",
+      "said": "DON'T \u2014 the lane cannot fire",
       "scope": {
         "corpus": "FiNER-139",
         "split": "dev",
         "on": "gold",
         "n": 165
       },
-      "said": "DON'T \u2014 the lane cannot fire",
       "when": "2026-09-01",
       "outcome": "right",
-      "what_happened": "0 of 704 on the full run. Structural: a numeral shares no token with an English phrase, on any run.",
+      "what_happened": "0 of 704 on the full run. Structural.",
       "note": ""
     },
     {
       "check": "accept_lane_fires",
+      "said": "BUILD \u2014 the lane can fire",
       "scope": {
         "corpus": "GeoWebNews",
         "split": "dev",
         "on": "gold",
         "n": 442
       },
-      "said": "BUILD \u2014 the lane can fire",
       "when": "2026-09-01",
       "outcome": "partly",
-      "what_happened": "The lane DID fire at 39.8%, so the prediction was correct. But it scored WORSE than the BAND lane it was meant to beat \u2014 0.206/0.134/0.214 against 0.250/0.330/0.370 on three models.",
-      "note": "THE MISS THAT MATTERS. Right about firing, wrong about worth. name_uniqueness was added because of it, and has not itself been tested on a corpus it did not come from."
+      "what_happened": "The lane DID fire at 39.8% but scored WORSE than BAND on three models.",
+      "note": "Right about firing, wrong about worth."
     },
     {
       "check": "name_uniqueness",
+      "said": "DON'T \u2014 names do not identify",
       "scope": {
         "corpus": "GeoWebNews",
         "split": "dev",
         "on": "gold",
         "n": 442
       },
-      "said": "DON'T \u2014 names do not identify",
       "when": "2026-09-02",
       "outcome": "unknown",
       "what_happened": "",
-      "note": "Added AFTER the miss above and tuned to catch it. Fitting a threshold to the case that embarrassed you is not validation; this stays `unknown` until it is right about a corpus it was not built on."
+      "note": "Added AFTER the miss above and tuned to catch it. Not validation."
     },
     {
       "check": "type_relation",
+      "said": "USABLE \u2014 1.22% false on gold",
       "scope": {
         "corpus": "FiNER-139",
         "split": "test",
         "on": "gold",
         "n": 187
       },
-      "said": "USABLE \u2014 1.22% false on gold",
       "when": "2026-09-02",
       "outcome": "wrong",
-      "what_happened": "35.7% false rejections on model output, dev split. Gold spans sit where the annotator put them; model spans drift, and the type rules then read the wrong context window and contradict confidently on a misreading.",
-      "note": "Tuned on gold and validated on gold \u2014 the measurement set WAS the tuning set. Rung 7 was built on this verdict and rejected."
-    },
-    {
-      "check": "type_relation",
-      "scope": {
-        "corpus": "FiNER-139",
-        "split": "test",
-        "on": "model output",
-        "n": 30
-      },
-      "said": "0% false",
-      "when": "2026-09-02",
-      "outcome": "partly",
-      "what_happened": "True on test, and 35.7% on dev with the same relation and the same model output. The verdict is a property of the split, not of the check.",
-      "note": ""
+      "what_happened": "35.7% false rejections on model output, dev split.",
+      "note": "Tuned on gold and validated on gold \u2014 the measurement set WAS the tuning set."
     }
   ]
 }
