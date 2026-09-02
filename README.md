@@ -97,3 +97,5 @@ absent rather than stubbed: a stage that runs and does nothing is the defect
 this tool exists to find.
 
 MIT.
+
+By [@pushpdeep](https://gitlab.com/pushpdeep) and [@wbagais](https://gitlab.com/wbagais).

@@ -9,6 +9,14 @@ description = "Every stage makes a bet. This one makes you say what it is."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
+# Both authors, both owners. The measurements this tool is built on were made
+# jointly — the audit that found four dead layers, the spine ablation, and the
+# three-draw protocol are Wejdan's; the corpus ports and the registry are
+# Pushpdeep's. Neither half is the tool without the other.
+authors = [
+  { name = "Pushpdeep Singh" },
+  { name = "Wejdan Bagais", email = "wejdan.bagais@usp.org" },
+]
 authors = [
   { name = "Pushpdeep Singh" },
   { name = "Wejdan Bagais", email = "wejdan.bagais@usp.org" },
