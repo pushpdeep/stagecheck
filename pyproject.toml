@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stagecheck"
+version = "0.1.0"
+description = "Every stage makes a bet. This one makes you say what it is."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["llm", "pipeline", "evaluation", "observability", "reliability"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Quality Assurance",
+]
+# No dependencies, deliberately. It reads a file and does arithmetic; it never
+# calls a model. That is why it cannot break when a provider changes a response
+# shape — the failure mode that ages most tooling in this space.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+stagecheck = "stagecheck.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/stagecheck"]
