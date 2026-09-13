@@ -40,3 +40,10 @@ packages = ["src/stagecheck"]
 # assets are generated from one geometry, and a set that cannot be regenerated
 # drifts the first time somebody is in a hurry.
 include = ["src/", "tests/", "assets/", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+# A src/ layout means `pytest` from a bare clone cannot import the package —
+# three collection errors before a single test runs, on the one tool here
+# someone might actually install. Declared rather than left to PYTHONPATH.
+pythonpath = ["src"]
+testpaths = ["tests"]
