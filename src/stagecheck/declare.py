@@ -138,6 +138,34 @@ class Stage:
 
     _halts: list = field(default_factory=list, repr=False)
 
+    # ── tense zero ─────────────────────────────────────────────────────
+    def confirm(self, **context) -> list[tuple[str, bool, str]]:
+        """Check the declared invariants BEFORE the stage runs.
+
+        `watch` checks the same statements DURING a run and raises
+        `SetupBroken` when one breaks. `confirm` asks them first, when the
+        answer can still stop the spend, and REPORTS rather than raising —
+        because several may be wrong at once and seeing one of five is how a
+        misconfiguration gets fixed five times.
+
+        Returns (name, holds, says) per invariant. An invariant that cannot
+        see what it needs reads False, exactly as in `watch`: it could not
+        run, and counting that as a pass is the two-state accounting this
+        tool refuses everywhere else.
+
+        The case it was written from: twelve cells of a study ran with another
+        corpus's task description. Every precondition held — there really were
+        mentions to find — and the INSTRUCTION was wrong. A precondition
+        asks whether the stage has work to do; this asks whether the stage is
+        the one that was declared.
+        """
+        return [(inv.name, inv.check(**context), inv.says)
+                for inv in self.invariants]
+
+    def confirmed(self, **context) -> bool:
+        """True when every declared invariant holds on this configuration."""
+        return all(holds for _, holds, _ in self.confirm(**context))
+
     # ── tense one ──────────────────────────────────────────────────────
     def preflight(self, records) -> Measurement | None:
         """Does the bet hold on this data, before the stage is built?

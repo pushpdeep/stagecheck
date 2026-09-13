@@ -172,11 +172,42 @@ class Stage:
 
 
 class Ledger:
-    """Rows and summaries for one run. Explicit, so tests do not share state."""
+    """Rows and summaries for one run. Explicit, so tests do not share state.
 
-    def __init__(self):
+    `run` is the RUN STAMP: what this run WAS, as opposed to what its stages
+    did. Arbitrary key-values — a model name, a commit, a host, a GPU, a
+    library version. **stagecheck interprets none of them.** It carries them,
+    writes them onto every row, and refuses to pool two ledgers that disagree.
+
+    The stamp exists because a rate over an unnamed set and a rate over a
+    misconfigured run are the same defect one level apart, and neither
+    announces itself. Measured in the study this came from: the same corpus,
+    model and seed gave 23 records on a CPU-split model and 22 on a
+    GPU-resident one, because floating-point addition is not associative and a
+    near-tie at the sampling step resolves differently. Two machines are two
+    experiments, and nothing in the output said so.
+    """
+
+    def __init__(self, run: dict | None = None):
         self.rows: list[Row] = []
         self.summaries: list[Summary] = []
+        self.run: dict = dict(run or {})
+
+    def stamp(self, **fields) -> "Ledger":
+        """Add to the run stamp. Returns self, so it chains at construction.
+
+        Refuses to CHANGE a key that is already set: a stamp that can be
+        rewritten mid-run describes neither the before nor the after, which is
+        the failure it exists to prevent.
+        """
+        for k, v in fields.items():
+            if k in self.run and self.run[k] != v:
+                raise ValueError(
+                    f"run stamp {k!r} is already {self.run[k]!r} and cannot "
+                    f"become {v!r}. A stamp that changes mid-run describes "
+                    f"neither half of it.")
+            self.run[k] = v
+        return self
 
     @contextmanager
     def stage(self, name: str, *, bet: str, denominator: str, number: str = ""):
@@ -188,14 +219,55 @@ class Ledger:
             self.summaries.append(s.summary())
 
     def write(self, path="stagecheck.jsonl") -> int:
+        """Write every row, each carrying the run stamp.
+
+        On the row rather than in a header, deliberately: rows get filtered,
+        concatenated and pasted between files, and a header does not survive
+        any of that. A row that has been separated from its stamp is a row
+        nobody can place.
+        """
         p = pathlib.Path(path)
         with p.open("w") as fh:
             for r in self.rows:
-                fh.write(json.dumps(asdict(r)) + "\n")
+                d = asdict(r)
+                if self.run:
+                    d["run"] = dict(self.run)
+                fh.write(json.dumps(d) + "\n")
         return len(self.rows)
 
     def report(self) -> str:
         return report(self.summaries)
+
+    def merge(self, other: "Ledger") -> "Ledger":
+        """Combine two ledgers, or refuse and say which keys disagree.
+
+        **This is the point of the stamp.** Rows from two runs with different
+        configurations average into a number that describes neither, and the
+        average looks exactly like a number that describes one. A missing
+        stamp on either side is not permission — it is the case where nobody
+        can tell, and it is refused too.
+        """
+        if not self.run or not other.run:
+            raise ValueError(
+                "cannot merge ledgers when either has no run stamp. An "
+                "unstamped ledger is not compatible with everything; it is a "
+                "ledger nobody can place, which is the stronger reason to "
+                "refuse.")
+        differ = {k for k in set(self.run) | set(other.run)
+                  if self.run.get(k) != other.run.get(k)}
+        if differ:
+            lines = "\n".join(
+                f"    {k}: {self.run.get(k)!r} vs {other.run.get(k)!r}"
+                for k in sorted(differ))
+            raise ValueError(
+                f"refusing to merge ledgers that describe different runs:\n"
+                f"{lines}\n"
+                "  Pool them and the result describes neither. If they really "
+                "are one run, say so by giving them one stamp.")
+        merged = Ledger(run=dict(self.run))
+        merged.rows = self.rows + other.rows
+        merged.summaries = self.summaries + other.summaries
+        return merged
 
 
 #: The default ledger, for the common case of one pipeline in one process.
