@@ -1,5 +1,16 @@
 # stagecheck — provenance gaps found while running the matrix
 
+> **All of these are now built** (2026-09-10). `Ledger(run={...})` carries a run
+> stamp onto every row; `merge()` refuses to pool ledgers whose stamps differ,
+> and refuses when either is missing, because absence is not agreement; and
+> `confirm()` checks a stage's declared invariants before it runs, reporting
+> every one rather than raising on the first. 19 tests, in
+> `tests/test_provenance.py`.
+>
+> The text below is kept as written — the reasoning is what justified the
+> features, and a record that erases the problem once it is solved cannot be
+> checked against the solution.
+
 *Both come from a real failure on 2026-09-06. Neither is built. Recorded here
 rather than in code because the tool is complete to its current design and the
 evidence for changing it is one day old.*
